@@ -10,6 +10,29 @@ type Props = {
   params: Promise<{ slug?: string[] }>;
 };
 
+export async function generateMetadata({ params }: Props) {
+  const resolvedParams = await params;
+  const slug = resolvedParams.slug ?? [];
+  const tag = slug[0] === "all" ? undefined : slug[0];
+  return {
+    title: `${tag} notes`,
+    description: `All ${tag} notes`,
+    openGraph: {
+      title: `${tag} notes`,
+      description: `All ${tag} notes`,
+      url: `https://07-routing-nextjs-sand-six.vercel.app/notes/filter/${tag}`,
+      siteName: "NoteHub",
+      images: [
+        {
+          url: "https://ac.goit.global/fullstack/react/notehub-og-meta.jpg",
+          width: 1200,
+          height: 630,
+          alt: "Note Hub Logo",
+        },
+      ],
+    },
+  };
+}
 export default async function NotesPage({ params }: Props) {
   const resolvedParams = await params;
   const slug = resolvedParams.slug ?? [];
