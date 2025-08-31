@@ -1,6 +1,7 @@
-import { getTags } from "@/lib/api";
+// import { getTags } from "@/lib/api";
 import css from "./createNote.module.css";
 import NoteForm from "@/components/NoteForm/NoteForm";
+import { getTags } from "@/lib/api";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -27,7 +28,7 @@ export default async function CreateNote() {
     <main className={css.main}>
       <div className={css.container}>
         <h1 className={css.title}>Create note</h1>
-        {<NoteForm onCancel={} />}
+        {<NoteForm tags={tags} />}
       </div>
     </main>
   );

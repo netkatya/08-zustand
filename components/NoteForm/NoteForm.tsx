@@ -1,9 +1,13 @@
+"use client";
+
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import css from "./NoteForm.module.css";
 // import { Formik, Form, Field, ErrorMessage, type FormikHelpers } from "formik";
 // import * as Yup from "yup";
 import { createNote } from "@/lib/api";
 import type { Note } from "../../types/note";
+import { useRouter } from "next/navigation";
+import { useNoteStore } from "@/lib/store/noteStore";
 
 interface FormValues {
   title: string;
@@ -11,19 +15,18 @@ interface FormValues {
   tag: string;
 }
 
-interface NoteFormProps {
-  onCancel: () => void;
-}
-
-export default function NoteForm({ onCancel }: NoteFormProps) {
+export default function NoteForm({ tags }: { tags: string[] }) {
   const queryClient = useQueryClient();
-
+  const router = useRouter();
+  const { draft, setDraft, clearDraft } = useNoteStore();
   const mutation = useMutation<Note, Error, FormValues>({
     mutationFn: createNote,
 
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["notes"] });
-      onCancel();
+
+      clearDraft();
+      router.back();
     },
   });
 
@@ -48,6 +51,8 @@ export default function NoteForm({ onCancel }: NoteFormProps) {
           minLength={3}
           maxLength={50}
           className={css.input}
+          value={draft.title}
+          onChange={(e) => setDraft({ title: e.target.value })}
         />
       </div>
 
@@ -60,17 +65,25 @@ export default function NoteForm({ onCancel }: NoteFormProps) {
           maxLength={500}
           required
           className={css.textarea}
+          value={draft.content}
+          onChange={(e) => setDraft({ content: e.target.value })}
         />
       </div>
 
       <div className={css.formGroup}>
         <label htmlFor="tag">Tag</label>
-        <select id="tag" name="tag" className={css.select}>
-          <option value="Todo">Todo</option>
-          <option value="Work">Work</option>
-          <option value="Personal">Personal</option>
-          <option value="Meeting">Meeting</option>
-          <option value="Shopping">Shopping</option>
+        <select
+          id="tag"
+          name="tag"
+          className={css.select}
+          value={draft.tag}
+          onChange={(e) => setDraft({ tag: e.target.value })}
+        >
+          {tags.map((tag) => (
+            <option key={tag} value={tag}>
+              {tag}
+            </option>
+          ))}
         </select>
       </div>
 
@@ -79,13 +92,18 @@ export default function NoteForm({ onCancel }: NoteFormProps) {
       )}
 
       <div className={css.actions}>
-        <button type="button" className={css.cancelButton} onClick={onCancel}>
+        <button
+          type="button"
+          className={css.cancelButton}
+          onClick={() => router.back()}
+        >
           Cancel
         </button>
         <button
           type="submit"
           className={css.submitButton}
           disabled={mutation.isPending}
+          onSubmit={() => router.back()}
         >
           {mutation.isPending ? "Creating..." : "Create note"}
         </button>
