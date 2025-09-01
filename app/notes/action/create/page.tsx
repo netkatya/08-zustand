@@ -1,4 +1,3 @@
-// import { getTags } from "@/lib/api";
 import css from "./createNote.module.css";
 import NoteForm from "@/components/NoteForm/NoteForm";
 import { getTags } from "@/lib/api";

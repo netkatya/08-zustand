@@ -78,8 +78,10 @@ export const fetchNoteById = async (id: string): Promise<Note> => {
   return response.data;
 };
 
+const DEFAULT_TAGS = ["Todo", "Personal", "Work", "Shopping", "Meeting"];
+
 export const getTags = async (): Promise<string[]> => {
   const { notes } = await fetchNotes("");
-  const tags = Array.from(new Set(notes.map((note) => note.tag)));
-  return [...tags];
+  const tagsFromNotes = Array.from(new Set(notes.map((note) => note.tag)));
+  return Array.from(new Set([...DEFAULT_TAGS, ...tagsFromNotes]));
 };
