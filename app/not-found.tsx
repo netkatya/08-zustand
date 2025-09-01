@@ -3,10 +3,10 @@ import css from "./not-found.module.css";
 
 export const metadata: Metadata = {
   title: "404 | Page Not Found",
-  description: "This page doesn`n exist",
+  description: "This page doesn'n exist",
   openGraph: {
     title: "404 | Page Not Found",
-    description: "This page doesn`n exist",
+    description: "This page doesn'n exist",
     url: "https://08-zustand-ten-ochre.vercel.app/not-found",
     images: [
       {

@@ -101,7 +101,6 @@ export default function NoteForm({ tags }: { tags: string[] }) {
           type="submit"
           className={css.submitButton}
           disabled={mutation.isPending}
-          onSubmit={() => router.back()}
         >
           {mutation.isPending ? "Creating..." : "Create note"}
         </button>
