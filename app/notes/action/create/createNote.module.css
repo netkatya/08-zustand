@@ -4,7 +4,7 @@
 
 .container {
     width: 90%;
-    max-width: 1280px;
+    max-width: 880px;
     margin: 0px auto;
     padding: 0 16px 16px;
 }
@@ -13,6 +13,6 @@
     font-size: 36px;
     font-weight: 700;
     color: #1a1a1a;
-    margin-bottom: 60px;
+    margin-bottom: 48px;
     text-align: center;
 }

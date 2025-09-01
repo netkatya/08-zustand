@@ -33,12 +33,12 @@
 }
 
 .pagination li.active:hover {
-    background-color: #0d6efd;
+    background-color: #ae1212;
 }
 
 .active {
-    background-color: #0d6efd;
-    border-color: #0d6efd;
+    background-color: #6c0505;
+    border-color: #6c0505;
 }
 
 .active a {
